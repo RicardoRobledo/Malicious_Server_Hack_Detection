@@ -1,61 +1,61 @@
-# 🛡️ Predicción de Hackeos Maliciosos en Servidores
+# 🛡️ Malicious Server Hack Prediction
 
-## 📋 Descripción del Proyecto
+## 📋 Project Description
 
-Este proyecto desarrolla un modelo predictivo para identificar patrones que indiquen la probabilidad de hackeos maliciosos en servidores. Con el aumento exponencial de los pagos digitales a nivel global, los ataques cibernéticos se han vuelto cada vez más frecuentes, donde los hackers pueden comprometer datos utilizando únicamente números telefónicos vinculados a cuentas bancarias.
+This project develops a predictive model to identify patterns that indicate the probability of malicious server hacks. With the exponential growth of digital payments globally, cyberattacks have become increasingly frequent, where hackers can compromise data using only phone numbers linked to bank accounts.
 
-**Objetivo:** Construir un sistema de detección temprana que permita a los equipos de ciberseguridad prevenir ataques antes de que ocurran.
+**Objective:** Build an early detection system that allows cybersecurity teams to prevent attacks before they actually happen.
 
-## 🎯 Variable Objetivo
+## 🎯 Target Variable
 
-- **`MALICIOUS_OFFENSE`**: Indica si un servidor será víctima de un hackeo malicioso
+- **`MALICIOUS_OFFENSE`**: Indicates whether a server will be victim of a malicious hack
 
 ## 🗂️ Dataset
 
-- **Fuente:** [Malicious Server Hack Dataset](https://www.kaggle.com/datasets/lplenka/malicious-server-hack)
-- **Descarga automática:** Utilizando `kagglehub` para reproducibilidad
-- **Variables:** Conjunto de características anónimas que permiten la predicción
+- **Source:** [Malicious Server Hack Dataset](https://www.kaggle.com/datasets/lplenka/malicious-server-hack)
+- **Automatic download:** Using `kagglehub` for reproducibility
+- **Variables:** Set of anonymous features that enable prediction
 
-## 🔧 Metodología y Pipeline
+## 🔧 Methodology and Pipeline
 
-### 1. Preprocesamiento de Datos
-- **Imputación de valores faltantes:** `SimpleImputer` (mediana para numéricas, moda para categóricas)
-- **Escalado de variables numéricas:** `StandardScaler`
-- **Codificación de categóricas:** `OneHotEncoder` con manejo de categorías desconocidas
-- **Arquitectura modular:** `ColumnTransformer` para procesamiento paralelo
+### 1. Data Preprocessing
+- **Missing value imputation:** `SimpleImputer` (median for numerical, mode for categorical)
+- **Numerical variable scaling:** `StandardScaler`
+- **Categorical encoding:** `OneHotEncoder` with unknown category handling
+- **Modular architecture:** `ColumnTransformer` for parallel processing
 
-### 2. Balanceo de Clases
-Evaluación exhaustiva de técnicas de balanceo:
+### 2. Class Balancing
+Exhaustive evaluation of balancing techniques:
 
-**Técnicas de Submuestreo:**
+**Undersampling Techniques:**
 - TomekLinks
 - EditedNearestNeighbours (ENN)
 - RepeatedEditedNearestNeighbours (RENN)
 - OneSidedSelection (OSS)
 - NeighbourhoodCleaningRule (NCR)
 
-**Técnicas de Sobremuestreo:**
+**Oversampling Techniques:**
 - RandomOverSampler
 - **SMOTE** (Synthetic Minority Oversampling Technique)
 - BorderlineSMOTE
 - **ADASYN** (Adaptive Synthetic Sampling)
 
-### 3. Modelos Evaluados
+### 3. Models Evaluated
 - **Logistic Regression (LR)**
 - **Linear Discriminant Analysis (LDA)**
 - **Random Forest (RF)**
-- **Gradient Boosting (GB)** ⭐ *Mejor rendimiento*
+- **Gradient Boosting (GB)** ⭐ *Best performance*
 - **Support Vector Classifier (SVC)**
 - **Gaussian Naive Bayes (NB)**
 
-### 4. Calibración de Probabilidades
-- **CalibratedClassifierCV** con método isotónico para obtener probabilidades bien calibradas
+### 4. Probability Calibration
+- **CalibratedClassifierCV** with isotonic method to obtain well-calibrated probabilities
 
-## 📊 Resultados Principales
+## 📊 Main Results
 
-### Rendimiento por Modelo (G-Media):
-| Modelo | Media | Desv. Estándar |
-|--------|-------|----------------|
+### Model Performance (G-Mean):
+| Model | Mean | Std. Deviation |
+|-------|------|----------------|
 | Gradient Boosting | **0.989** | 0.003 |
 | Random Forest | 0.928 | 0.015 |
 | SVC | 0.730 | 0.017 |
@@ -63,21 +63,21 @@ Evaluación exhaustiva de técnicas de balanceo:
 | Logistic Regression | 0.546 | 0.009 |
 | Naive Bayes | 0.559 | 0.014 |
 
-### Rendimiento por Técnica de Balanceo:
-| Técnica | G-Media | Desv. Estándar |
-|---------|---------|----------------|
+### Performance by Balancing Technique:
+| Technique | G-Mean | Std. Deviation |
+|-----------|--------|----------------|
 | **RandomOverSampler** | **0.995** | 0.002 |
 | SMOTE | 0.994 | 0.003 |
 | BorderlineSMOTE | 0.994 | 0.003 |
 | ADASYN | 0.994 | 0.003 |
 | RENN | 0.992 | 0.003 |
 
-### Modelo Final: Gradient Boosting + ADASYN + Calibración
-- **Distribución de predicciones en conjunto de prueba:**
-  - Clase 0 (No hackeo): 8,004 instancias (33.55%)
-  - Clase 1 (Hackeo): 7,899 instancias (33.11%)
+### Final Model: Gradient Boosting + ADASYN + Calibration
+- **Prediction distribution on test set:**
+  - Class 0 (No hack): 8,004 instances (33.55%)
+  - Class 1 (Hack): 7,899 instances (33.11%)
 
-## 🛠️ Tecnologías y Librerías
+## 🛠️ Technologies and Libraries
 
 ```python
 # Core ML
@@ -86,49 +86,49 @@ imbalanced-learn
 numpy
 pandas
 
-# Modelos específicos
+# Specific models
 RandomForestClassifier
 GradientBoostingClassifier
 SVM, Logistic Regression, etc.
 
-# Balanceo de clases
+# Class balancing
 SMOTE, ADASYN, TomekLinks, etc.
 
-# Evaluación
+# Evaluation
 RepeatedStratifiedKFold
 geometric_mean_score
 CalibratedClassifierCV
 ```
 
-## 🎯 Métricas de Evaluación
+## 🎯 Evaluation Metrics
 
-- **Métrica principal:** G-Media (Geometric Mean Score)
-- **Justificación:** Ideal para problemas de clasificación con clases desbalanceadas
-- **Validación:** Validación cruzada estratificada repetida (5 folds, 3 repeticiones)
-- **Robustez:** Análisis de estabilidad a través de múltiples ejecuciones
+- **Main metric:** G-Mean (Geometric Mean Score)
+- **Rationale:** Ideal for imbalanced classification problems
+- **Validation:** Repeated stratified cross-validation (5 folds, 3 repeats)
+- **Robustness:** Stability analysis across multiple runs
 
-## 📈 Conclusiones Clave
+## 📈 Key Conclusions
 
-1. **Gradient Boosting** demostró ser el modelo más efectivo para este problema
-2. Las técnicas de **sobremuestreo** superaron consistentemente a las de submuestreo
-3. **RandomOverSampler** alcanzó el mejor rendimiento (G-Media: 0.995)
-4. La **calibración de probabilidades** mejora la confiabilidad de las predicciones
-5. El pipeline es robusto y generalizable para datos de producción
+1. **Gradient Boosting** proved to be the most effective model for this problem
+2. **Oversampling** techniques consistently outperformed undersampling
+3. **RandomOverSampler** achieved the best performance (G-Mean: 0.995)
+4. **Probability calibration** improves prediction reliability
+5. Pipeline is robust and generalizable for production data
 
-## 🔮 Aplicaciones Prácticas
+## 🔮 Practical Applications
 
-- **Detección preventiva** de intentos de hackeo
-- **Alertas tempranas** para equipos de ciberseguridad
-- **Monitoreo continuo** de la seguridad de servidores
-- **Optimización de recursos** de seguridad basada en riesgo
+- **Preventive detection** of hacking attempts
+- **Early alerts** for cybersecurity teams
+- **Continuous monitoring** of server security
+- **Risk-based optimization** of security resources
 
-## 📝 Notas Técnicas
+## 📝 Technical Notes
 
-- Pipeline completamente automatizado con `ColumnTransformer` e `imblearn.Pipeline`
-- Manejo robusto de datos categóricos y numéricos
-- Evaluación comparativa exhaustiva de técnicas de balanceo
-- Código modular y reutilizable para diferentes conjuntos de datos
+- Fully automated pipeline with `ColumnTransformer` and `imblearn.Pipeline`
+- Robust handling of categorical and numerical data
+- Exhaustive comparative evaluation of balancing techniques
+- Modular and reusable code for different datasets
 
 ---
 
-*Este proyecto forma parte de un sistema integral de ciberseguridad predictiva, diseñado para anticipar y prevenir ataques maliciosos en infraestructuras críticas.*
+*This project is part of a comprehensive predictive cybersecurity system, designed to anticipate and prevent malicious attacks on critical infrastructure.*
